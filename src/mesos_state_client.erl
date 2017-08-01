@@ -46,7 +46,7 @@ maybe_enable_ssl(Options) ->
   end.
 
 format_token(AuthToken) ->
-  lists:flatten("token=" ++ AuthToken).
+  lists:flatten("Basic " ++ AuthToken).
 
 -spec(maybe_add_token(list({string(), string()})) -> list({string(), string()})).
 maybe_add_token(Headers) ->
@@ -61,14 +61,14 @@ maybe_add_token(Headers) ->
 -spec(poll() -> {ok, mesos_agent_state()} | {error, Reason :: term()}).
 poll() ->
   Proto = proto(),
-  poll(Proto ++ "://localhost:5051/version").
+  poll(Proto ++ "://localhost:5051/state").
 
 -spec(poll(inet:ip_address(), inet:port_number()) -> {ok, mesos_agent_state()} | {error, Reason :: term()}).
 poll(IP, Port) when is_tuple(IP) andalso is_number(Port) ->
   Proto = proto(),
   IPStr = inet:ntoa(IP),
   PortStr = integer_to_list(Port),
-  URI = lists:flatten(Proto ++ "://" ++ IPStr ++ ":" ++ PortStr ++ "/version"),
+  URI = lists:flatten(Proto ++ "://" ++ IPStr ++ ":" ++ PortStr ++ "/state"),
   poll(URI).
 
 -spec(poll(string()) -> {ok, mesos_agent_state()} | {error, Reason :: term()}).
