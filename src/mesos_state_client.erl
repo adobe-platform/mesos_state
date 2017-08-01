@@ -61,14 +61,14 @@ maybe_add_token(Headers) ->
 -spec(poll() -> {ok, mesos_agent_state()} | {error, Reason :: term()}).
 poll() ->
   Proto = proto(),
-  poll(Proto ++ "://localhost:5051/state").
+  poll(Proto ++ "://localhost:5051/version").
 
 -spec(poll(inet:ip_address(), inet:port_number()) -> {ok, mesos_agent_state()} | {error, Reason :: term()}).
 poll(IP, Port) when is_tuple(IP) andalso is_number(Port) ->
   Proto = proto(),
   IPStr = inet:ntoa(IP),
   PortStr = integer_to_list(Port),
-  URI = lists:flatten(Proto ++ "://" ++ IPStr ++ ":" ++ PortStr ++ "/state"),
+  URI = lists:flatten(Proto ++ "://" ++ IPStr ++ ":" ++ PortStr ++ "/version"),
   poll(URI).
 
 -spec(poll(string()) -> {ok, mesos_agent_state()} | {error, Reason :: term()}).
