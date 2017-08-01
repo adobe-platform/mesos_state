@@ -46,7 +46,7 @@ maybe_enable_ssl(Options) ->
   end.
 
 format_token(AuthToken) ->
-  lists:flatten("token=" ++ AuthToken).
+  lists:flatten("Basic " ++ AuthToken).
 
 -spec(maybe_add_token(list({string(), string()})) -> list({string(), string()})).
 maybe_add_token(Headers) ->
